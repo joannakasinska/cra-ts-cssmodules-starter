@@ -1,6 +1,7 @@
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { CombinedState, Store } from 'redux';
 import { Home } from './pages/home/Home';
@@ -18,14 +19,16 @@ const App = () => {
     store.dispatch(changeLocale());
 
     return (
-        <IntlProvider locale={locale} messages={translations.default[locale].messages}>
-            <Router history={createBrowserHistory()}>
-                <Switch>
-                    <Route path={HOME} exact component={Home} />
-                    <Redirect to={HOME} />
-                </Switch>
-            </Router>
-        </IntlProvider>
+        <Provider store={store}>
+            <IntlProvider locale={locale} messages={translations.default[locale].messages}>
+                <Router history={createBrowserHistory()}>
+                    <Switch>
+                        <Route path={HOME} exact component={Home} />
+                        <Redirect to={HOME} />
+                    </Switch>
+                </Router>
+            </IntlProvider>
+        </Provider>
     );
 };
 
