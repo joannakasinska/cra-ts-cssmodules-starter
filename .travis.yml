@@ -1,0 +1,35 @@
+language: node_js
+node_js: 13.3.0
+
+env:
+    - TEST_SUITE=units
+
+cache:
+    directories:
+        - node_modules
+
+before_script:
+    - npm install
+
+jobs:
+    include:
+        - stage: test
+          script:
+              - npm run test
+              - npm run lint
+
+          before_script:
+              - npm install
+
+          after_success:
+              - npm run test:coverage
+
+          cache:
+              directories:
+                  - node_modules
+
+          notifications:
+              email:
+                  recipients:
+                      - joanna_kasinska@o2.pl
+                  on_failure: always
