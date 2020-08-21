@@ -1,21 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.module.scss';
+import { createBrowserHistory } from 'history';
+import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import { Home } from './pages/home/Home';
+import { ROUTES } from './router/routes';
 
-function App() {
+const App = () => {
+    const { HOME } = ROUTES;
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router history={createBrowserHistory()}>
+            <Switch>
+                <Route path={HOME} exact component={Home} />
+                <Redirect to={HOME} />
+            </Switch>
+        </Router>
     );
-}
+};
 
 export default App;
